@@ -1,0 +1,1 @@
+Fall 2024 Duke ECE 590 taught by Prof. Afsaneh Rahbar
