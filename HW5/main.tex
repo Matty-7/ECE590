@@ -1,0 +1,188 @@
+\documentclass[12 pt]{article}         
+\usepackage{amsfonts, amssymb}
+\usepackage{fancyhdr}
+\usepackage{amsmath}
+\usepackage{fancyhdr}
+\usepackage{verbatimbox}
+\usepackage{tikz}
+\usetikzlibrary{automata, positioning}
+
+\oddsidemargin=-0.5cm                  
+\setlength{\textwidth}{6.5in}          
+\addtolength{\voffset}{-20pt}        		
+\addtolength{\headsep}{25pt}
+
+\setlength{\headheight}{27.2pt}
+\addtolength{\topmargin}{-12.7pt}
+
+\pagestyle{fancy}
+\fancyhf{}
+\fancyhead[L]{Theory and Practice of Algorithms \\ Homework 5}
+\fancyhead[R]{Jingheng Huan \\ \today}
+\fancyfoot[C]{\thepage}
+
+\begin{document}
+
+\section*{Problem 1}
+
+This is the sequence of configurations that the Turing Machine \(M_1\) enters when started on the input \(110\#11\).
+
+\[
+(q_1, \stackrel{\downarrow}{1}10\#11)
+\]
+\[
+(q_3, x\stackrel{\downarrow}{1}0\#11)
+\]
+\[
+(q_3, x1\stackrel{\downarrow}{0}\#11)
+\]
+\[
+(q_3, x10\stackrel{\downarrow}{\#}11)
+\]
+\[
+(q_5, x10\#\stackrel{\downarrow}{1}1)
+\]
+\[
+(q_6, x10\stackrel{\downarrow}{\#}x1)
+\]
+\[
+(q_7, x1\stackrel{\downarrow}{0}\#x1)
+\]
+\[
+(q_7, x\stackrel{\downarrow}{1}0\#x1)
+\]
+\[
+(q_7, \stackrel{\downarrow}{x}10\#x1)
+\]
+\[
+(q_1, x\stackrel{\downarrow}{1}0\#x1)
+\]
+\[
+(q_3, xx\stackrel{\downarrow}{0}\#x1)
+\]
+\[
+(q_3, xx0\stackrel{\downarrow}{\#}x1)
+\]
+\[
+(q_5, xx0\#\stackrel{\downarrow}{x}1)
+\]
+\[
+(q_5, xx0\#x\stackrel{\downarrow}{1})
+\]
+\[
+(q_6, xx0\#\stackrel{\downarrow}{x}x)
+\]
+\[
+(q_6, xx0\stackrel{\downarrow}{\#}xx)
+\]
+\[
+(q_7, xx\stackrel{\downarrow}{0}\#xx)
+\]
+\[
+(q_7, x\stackrel{\downarrow}{x}0\#xx)
+\]
+\[
+(q_1, xx\stackrel{\downarrow}{0}\#xx)
+\]
+\[
+(q_2, xxx\stackrel{\downarrow}{\#}xx)
+\]
+\[
+(q_4, xxx\#\stackrel{\downarrow}{x}x)
+\]
+\[
+(q_4, xxx\#x\stackrel{\downarrow}{x})
+\]
+
+Here we can see that it stcuks in q4 state and can't go to the state of $q_accept$. Hence 110\#11 goes to reject state.
+
+
+\vspace{1cm}
+
+\section*{Problem 2}
+
+(a) 
+\textbf{Scan for ‘\#’}: Move right until the ‘\#’ symbol is found. If ‘\#’ is not found, reject.
+
+
+\textbf{Compare symbols symmetrically}: Repeat until all symbols before '\#' are processed:
+    \begin{enumerate}
+        \item Move left from '\#' to find the first '0' or '1'), replace with 'X', and remember its value.
+        \item Move right to '\#', then move right to find the first '0' or '1' after '\#'.
+        \item Compare this symbol with the remembered value:
+        \begin{itemize}
+            \item If they match, mark it.
+            \item If they do not match, then reject.
+        \end{itemize}
+    \end{enumerate}
+
+\textbf{Check for extra symbols}: After all symbols before '\#' are marked, move right from '\#' to check for any unmarked symbols. If unmarked symbols are found, reject; else, accept.
+
+\vspace{1cm}
+
+(b)
+\noindent The Turing machine \( M \) is defined as follows:
+
+
+\( Q = \{ q_0, q_1, q_2, q_3, q_{\text{accept}}, q_{\text{reject}} \} \) is the set of states.
+
+
+\( \Sigma = \{ 0, 1, \# \} \) is the input alphabet.
+
+
+\( \Gamma = \{ 0, 1, \#, \_ \} \) is the tape alphabet, where \( \_ \) represents the blank symbol.
+
+
+\( q_0 \) is the initial state.
+
+
+\( q_{\text{accept}} \) is the accept state.
+
+
+\( q_{\text{reject}} \) is the reject state.
+
+
+\( \delta \) is the transition function, defined as follows:
+
+
+\begin{center}
+\begin{tabular}{|c|c|c|c|c|}
+\hline
+Current State & Current Symbol & New Symbol & Direction & New State \\
+\hline
+$q0$ & $0$   & $X$   & $R$ & $q1$ \\
+$q0$ & $1$   & $X$   & $R$ & $q2$ \\
+$q0$ & $\#$  & $\#$  & $R$ & $q6$ \\
+\hline
+$q1$ & $0$   & $0$   & $R$ & $q1$ \\
+$q1$ & $1$   & $1$   & $R$ & $q1$ \\
+$q1$ & $X$   & $X$   & $R$ & $q1$ \\
+$q1$ & $\#$  & $\#$  & $R$ & $q3$ \\
+\hline
+$q2$ & $0$   & $0$   & $R$ & $q2$ \\
+$q2$ & $1$   & $1$   & $R$ & $q2$ \\
+$q2$ & $X$   & $X$   & $R$ & $q2$ \\
+$q2$ & $\#$  & $\#$  & $R$ & $q5$ \\
+\hline
+$q3$ & $X$   & $X$   & $R$ & $q3$ \\
+$q3$ & $0$   & $X$   & $L$ & $q4$ \\
+\hline
+$q4$ & $0$   & $0$   & $L$ & $q4$ \\
+$q4$ & $1$   & $1$   & $L$ & $q4$ \\
+$q4$ & $X$   & $X$   & $L$ & $q4$ \\
+$q4$ & $\#$  & $\#$  & $L$ & $q4$ \\
+$q4$ & $\_$  & $\_$  & $R$ & $q0$ \\
+\hline
+$q5$ & $X$   & $X$   & $R$ & $q5$ \\
+$q5$ & $1$   & $X$   & $L$ & $q4$ \\
+\hline
+$q6$ & $X$   & $X$   & $R$ & $q6$ \\
+$q6$ & $\_$  & $\_$  & $S$ & $q\_accept$ \\
+\hline
+\end{tabular}
+\end{center}
+
+
+\noindent\textbf{Collaborators: None}
+
+\end{document}
