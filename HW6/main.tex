@@ -25,7 +25,12 @@
 
 \section*{Problem 1}
 
-(a) $2n^3 - 8n^2 + 32n + 9 \in O(n^3)$ is True. The dominant term in the polynomial is $2n^3$. As n approaches infinity, the lower-degree terms $(-8n^2 + 32n + 9)$ become negligible in comparison to $2n^3$. Therefore, the function grows at a rate proportional to $n^3$, and we have $2n^3 - 8n^2 + 32n + 9 \leq C \cdot n^3 \quad$ \text{for some constant } C \text{ and sufficiently large } n.
+(a) $2n^3 - 8n^2 + 32n + 9 \in O(n^3)$ is True. The dominant term in the polynomial is $2n^3$. As n approaches infinity, the lower-degree terms $(-8n^2 + 32n + 9)$ become negligible in comparison to $2n^3$. Also, we have: $2n^3 - 8n^2 + 32n + 9 \leq C \cdot n^3 \quad$ \text{for some constant } C \text{ and sufficiently large } n.
+
+
+(b) $n^p \in O(e^n)$ , where  $p \in \mathbb{R}$  and  $p \geq 0$ is True. For any real  $p \geq 0$ ,  $n^p$  is a polynomial function, and  $e^n$  is an exponential function. Exponential functions grow faster than any polynomial function. When $n \to \infty$, we have $\lim_{n \to \infty} \frac{n^p}{e^n} = 0$. There exists a constant  $C > 0$  and  $n_0 > 0$  such that for all  $n > n_0$ , we have  $n^p \leq C \cdot e^n$. This implies that  $n^p$  grows slower than  $e^n$ . Therefore,  $n^p \in O(e^n)$ .
+
+
 
 
 
