@@ -1,0 +1,104 @@
+\documentclass[12 pt]{article}         
+\usepackage{amsfonts, amssymb}
+\usepackage{fancyhdr}
+\usepackage{amsmath}
+
+\oddsidemargin=-0.5cm                  
+\setlength{\textwidth}{6.5in}          
+\addtolength{\voffset}{-20pt}        		
+\addtolength{\headsep}{25pt}
+
+\setlength{\headheight}{27.2pt}
+\addtolength{\topmargin}{-12.7pt}
+
+\pagestyle{fancy}
+\fancyhf{}
+\fancyhead[L]{Theory and Practice of Algorithms \\ Homework 1}
+\fancyhead[R]{Jingheng Huan \\ \today}
+\fancyfoot[C]{\thepage}
+
+\begin{document}
+
+\section*{Proposition 1}	
+
+Prove that $\forall P, Q \in \mathbb{B}.(P \implies Q) \iff (\neg P \lor Q)$.
+
+\noindent\textbf{Proof:} \\[10pt]
+We need to prove this equivalence by proving both directions. \\
+Let's start with: \\
+\( P \implies Q \Rightarrow \neg P \lor Q \) \\
+Assume \( P \implies Q \) holds. By the definition of implication, this means that:
+\begin{itemize}
+    \item If \( P \) is true, then \( Q \) is true.
+    \item If \( P \) is false, the implication holds regardless of \( Q \)'s truth value.
+\end{itemize}
+Now, we show that \( \neg P \lor Q \) holds by considering two cases:
+\begin{itemize}
+    \item \textbf{Case 1:} \( P \) is false. In this case, \( \neg P \) is true, and thus \( \neg P \lor Q \) holds regardless of the value of \( Q \).
+    \item \textbf{Case 2:} \( P \) is true. Since \( P \implies Q \), we know \( Q \) must also be true. Therefore, \( \neg P \lor Q \) holds because \( Q \) is true.
+\end{itemize}
+Thus, we have shown that \( P \implies Q \Rightarrow \neg P \lor Q \). \\
+Now let's continue to prove \( \neg P \lor Q \Rightarrow P \implies Q \) \\
+Assume \( \neg P \lor Q \) holds. We will show that \( P \implies Q \) follows by considering two cases:
+\begin{itemize}
+    \item \textbf{Case 1:} \( P \) is false. In this case, \( \neg P \) is true, and therefore \( \neg P \lor Q \) holds regardless of the value of \( Q \). Since \( P \) is false, \( P \implies Q \) is true.
+    \item \textbf{Case 2:} \( P \) is true. Since \( \neg P \lor Q \) holds, and \( P \) is true, \( Q \) must also be true. Therefore, \( P \implies Q \) holds.
+\end{itemize}
+Thus, we have shown that \( \neg P \lor Q \Rightarrow P \implies Q \).
+
+Since we have proven both directions, we conclude that:
+\[
+P \implies Q \iff \neg P \lor Q
+\]
+\vspace{20pt}
+
+\section*{Proposition 2}							
+Prove that \(\forall n \in \mathbb{N}. \sum_{i=0}^{n} i^3 = \frac{1}{4} n^2 (n+1)^2\).
+
+\noindent\textbf{Proof:} \\[10pt]              
+We will use mathematical induction on $n$ to prove this statement.
+
+\noindent\textbf{Base Case:}
+For \(n = 0\), the left-hand side is \(\sum_{i=0}^{0} i^3 = 0^3 = 0\).  
+The right-hand side is \(\frac{1}{4} \times 0^2 \times (0+1)^2 = 0\).  
+Thus, the base case holds.
+
+\vspace{10pt}
+
+\noindent\textbf{Inductive Step:}
+Assume that the statement is true for some \(k \in \mathbb{N}\),
+\[
+\sum_{i=0}^{k} i^3 = \frac{1}{4} k^2 (k+1)^2
+\]
+We need to prove that the statement is true for \(k+1\),
+\[
+\sum_{i=0}^{k+1} i^3 = \frac{1}{4} (k+1)^2 (k+2)^2
+\]
+Starting from the inductive hypothesis:
+\[
+\sum_{i=0}^{k+1} i^3 = \left(\sum_{i=0}^{k} i^3\right) + (k+1)^3
+\]
+Substitute the inductive hypothesis:
+\[
+\sum_{i=0}^{k+1} i^3 = \frac{1}{4} k^2 (k+1)^2 + (k+1)^3
+\]
+Factor out \((k+1)^2\) from the terms:
+\[
+\sum_{i=0}^{k+1} i^3 = (k+1)^2 \left(\frac{1}{4} k^2 + (k+1)\right)
+\]
+Simplify the expression inside the parentheses:
+\[
+\sum_{i=0}^{k+1} i^3 = (k+1)^2 \left(\frac{k^2 + 4k + 4}{4}\right) 
+\]
+\[
+= (k+1)^2 \left(\frac{(k+2)^2}{4}\right)
+\]
+\[
+= \frac{1}{4} (k+1)^2 (k+2)^2
+\]
+Thus, the inductive step holds. By the principle of mathematical induction, the statement is true for all \(n \in \mathbb{N}\).
+
+\vspace{20pt}
+\noindent\textbf{Collaborators: None}
+
+\end{document}
