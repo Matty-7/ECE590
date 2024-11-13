@@ -38,7 +38,14 @@ $\lim_{n \to \infty} \frac{e^n}{n^p} = \infty$. This means  $e^n$  grows faster 
 \vspace{1cm}
 
 \section*{Problem 2}
+We need to show that there exist positive constants $c_1$, $c_2$, and $n_0$ such that for all $n \geq n_0$: $c_1 n^y \leq (n + x)^y \leq c_2 n^y$. Since x and y are constants and y $>$ 0, we can consider n becomes large.
 
+For the Upper Bound: For $n \geq 1$, we have $(n + x)^y \leq (n + |x|)^y \leq n^y (1 + \frac{|x|}{n})^y$. Using the inequality $(1 + \varepsilon)^y \leq e^{y\varepsilon}$ for $\varepsilon \geq 0$, we get: $(1 + \frac{|x|}{n})^y \leq e^{y \cdot \frac{|x|}{n}} \leq e^{y|x|}$. Thus, we have $(n + x)^y \leq n^y \cdot e^{y|x|} = C_2 n^y$, where $C_2 = e^{y|x|}$ is a constant.
+
+For the Lower Bound: For sufficiently large $n$, we have $(n + x)^y \geq (n - |x|)^y = n^y \left(1 - \frac{|x|}{n}\right)^y$. By using the inequality $(1 - \varepsilon)^y \geq 1 - y\varepsilon$ for $0 < \varepsilon < 1$ and $y > 0$: $\left(1 - \frac{|x|}{n}\right)^y \geq 1 - y \cdot \frac{|x|}{n}$. Therefore, $(n + x)^y \geq n^y \left(1 - \frac{y|x|}{n}\right) \geq n^y \left(1 - \frac{y|x|}{n_0}\right) = C_1 n^y$, for $n \geq n_0$, where $C_1 = 1 - \frac{y|x|}{n_0}$ is positive when $n_0 > y|x|$.
+
+We can say that there exist constants $C_1 > 0$ and $C_2 > 0$ such that: $C_1 n^y \leq (n + x)^y \leq C_2 n^y$, which means that
+$(n + x)^y = \Theta(n^y)$.
 
 
 \vspace{1cm}
