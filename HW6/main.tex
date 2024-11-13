@@ -102,6 +102,17 @@ S \approx \int_{0}^{n/2} (n - 2x)^2 \, dx \\
 
 The total sum  S  is proportional to  $n^3$ , so: $T(n) = T(k) + S = \Theta(n^3)$
 
+(d) Applying the Master Theorem for recurrences of the form:
+
+\[
+T(n) = a\, T\left( \dfrac{n}{b} \right) + f(n)
+\]
+
+we have a = 3, b = 3, \( f(n) = \dfrac{n}{\log n} \), we calculate $\log_b a = \log_3 3 = 1$. So $n^{\log_b a} = n$.
+
+Then let's compare  f(n)  with  $n^{\log_b a}$ : \( f(n) = \dfrac{n}{\log n} = \dfrac{n^{\log_b a}}{\log n} \)
+f(n)  is slightly smaller than  n  due to the  $\log n$  denominator. Determine which case of the Master Theorem applies:
+The Master Theorem doesn’t directly handle  f(n)  being smaller than  $n^{\log_b a}$  by a logarithmic factor. Since \( f(n) = \dfrac{n}{\log n} = n^{\log_b a} / \log n = o\left( n^{\log_b a} \right) \), but not polynomially smaller. The recurrence resembles \( T(n) = 3\, T\left( \dfrac{n}{3} \right) + n \), which has a solution  $T(n) = \Theta(n \log n)$. Because  f(n)  is \( \dfrac{n}{\log n} \), which is  n  divided by  $\log n$ , the overall  T(n)  will be $\Theta(n \log \log n)$.
 
 
 \vspace{1cm}
