@@ -66,6 +66,19 @@ We need to compare f(n) with $n^{\log_b a}$: $f(n) = n^2$ and $n^{\log_b a} = n^
 T(n) = \Theta\left( n^{\log_b a} \cdot \log n \right) = \Theta\left( n^2 \log n \right)
 \]
 
+(b) Applying the Master Theorem for recurrences of the form:
+
+\[
+T(n) = a\, T\left( \dfrac{n}{b} \right) + f(n)
+\]
+
+We have a = 2, b = 4, f(n) = $n^{1/2}$. Then let's compute $\log_b a$:
+
+\[
+\log_b a = \log_4 2 = \dfrac{1}{2}
+\]
+
+Since $f(n) = \Theta\left( n^{\log_b a} \right)$, we are in Case 2. Then we have $T(n) = \Theta\left( n^{\log_b a} \cdot \log n \right) = \Theta\left( n^{1/2} \log n \right)$.
 
 
 
