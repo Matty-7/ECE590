@@ -81,6 +81,28 @@ We have a = 2, b = 4, f(n) = $n^{1/2}$. Then let's compute $\log_b a$:
 Since $f(n) = \Theta\left( n^{\log_b a} \right)$, we are in Case 2. Then we have $T(n) = \Theta\left( n^{\log_b a} \cdot \log n \right) = \Theta\left( n^{1/2} \log n \right)$.
 
 
+(c) The recurrence reduces  n  by 2 each time, we expand the recurrence by repeatedly substituting:
+
+\[
+T(n) = T(n - 2) + n^2 \\
+= T(n - 4) + (n - 2)^2 + n^2 \\
+= T(n - 6) + (n - 4)^2 + (n - 2)^2 + n^2 \\
+= T(k) + \sum_{i=0}^{t} (n - 2i)^2
+\]
+
+k  is a small constant, and  t  is  n/2 . The sum  S  is: $S = \sum_{i=0}^{t} (n - 2i)^2$
+
+This sum consists of approximately  n/2  terms of decreasing squares starting from  $n^2$  down to a constant. The sum of squares of the first  m  positive integers is  $\sum_{k=1}^{m} k^2 = \frac{m(m + 1)(2m + 1)}{6}$. However, our sum is similar to summing squares from  n  down to a small number. To estimate  S , we can consider it proportional to  $n^3$ : $S \approx \int_{0}^{n/2} (n - 2x)^2 \, dx$. Then let's compute the integral:
+
+\[
+S \approx \int_{0}^{n/2} (n - 2x)^2 \, dx \\
+= \left[ (n - 2x)^3 / (-6) \right]_0^{n/2} \\
+= \left( 0 - \frac{n^3}{6} \right) = \frac{n^3}{6}
+\]
+
+The total sum  S  is proportional to  $n^3$ , so: $T(n) = T(k) + S = \Theta(n^3)$
+
+
 
 \vspace{1cm}
 
