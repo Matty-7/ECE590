@@ -4,8 +4,10 @@
 \usepackage{amsmath}
 \usepackage{fancyhdr}
 \usepackage{verbatimbox}
+\usepackage{verbatim}
 \usepackage{tikz}
 \usetikzlibrary{automata, positioning}
+\usepackage{graphicx}
 
 \oddsidemargin=-0.5cm                  
 \setlength{\textwidth}{6.5in}          
@@ -108,14 +110,225 @@ The total sum  S  is proportional to  $n^3$ , so: $T(n) = T(k) + S = \Theta(n^3)
 T(n) = a\, T\left( \dfrac{n}{b} \right) + f(n)
 \]
 
-we have a = 3, b = 3, \( f(n) = \dfrac{n}{\log n} \), we calculate $\log_b a = \log_3 3 = 1$. So $n^{\log_b a} = n$.
+we have a = 3, bj = 3, \( f(n) = \dfrac{n}{\log n} \), we calculate $\log_b a = \log_3 3 = 1$. So $n^{\log_b a} = n$.
 
 Then let's compare  f(n)  with  $n^{\log_b a}$ : \( f(n) = \dfrac{n}{\log n} = \dfrac{n^{\log_b a}}{\log n} \)
 f(n)  is slightly smaller than  n  due to the  $\log n$  denominator. Determine which case of the Master Theorem applies:
 The Master Theorem doesn’t directly handle  f(n)  being smaller than  $n^{\log_b a}$  by a logarithmic factor. Since \( f(n) = \dfrac{n}{\log n} = n^{\log_b a} / \log n = o\left( n^{\log_b a} \right) \), but not polynomially smaller. The recurrence resembles \( T(n) = 3\, T\left( \dfrac{n}{3} \right) + n \), which has a solution  $T(n) = \Theta(n \log n)$. Because  f(n)  is \( \dfrac{n}{\log n} \), which is  n  divided by  $\log n$ , the overall  T(n)  will be $\Theta(n \log \log n)$.
 
+\section*{Problem 4}
+Pseudocodes are also written in matrixmult.py files as code comments.
+
+\subsection*{Pseudocode and runtime analysis}
+\begin{verbatim}
+function matrix_mul(A, B):
+    m = number of rows in A
+    k = number of columns in A (also number of rows in B)
+    n = number of columns in B
+    Initialize C as an m x n matrix filled with zeros
+    for i from 0 to m - 1:
+        for j from 0 to n - 1:
+            sum = 0
+            for l from 0 to k - 1:
+                sum = sum + A[i][l] * B[l][j]
+            C[i][j] = sum
+    return C
+\end{verbatim}
+
+\begin{verbatim}
+function matrix_mul(A, B):
+Executed: Once when the function is called.
+Time Complexity: O(1)
+\end{verbatim}
+
+\begin{verbatim}
+m = number of rows in A
+Executed: Each line is executed once.
+Time Complexity: O(1) per line.
+Total Time: O(1)
+\end{verbatim}
+
+\begin{verbatim}
+k = number of columns in A (also number of rows in B)
+Executed: Each line is executed once.
+Time Complexity: O(1) per line.
+Total Time: O(1)
+\end{verbatim}
+
+\begin{verbatim}
+n = number of columns in B
+Executed: Each line is executed once.
+Time Complexity: O(1) per line.
+Total Time: O(1)
+\end{verbatim}
+
+\begin{verbatim}
+Initialize C as an m x n matrix filled with zeros
+Executed: Once.
+Operations: Initializes an  m * n  matrix.
+Time Complexity: O( m * n )
+The outer list comprehension runs  m  times.
+The inner list comprehension runs  n  times for each outer iteration.
+Total Time: O( m * n )
+\end{verbatim}
+
+\begin{verbatim}
+for i from 0 to m - 1:
+Executed:  m  times.
+Time Complexity: Loop overhead is negligible; loop body determines total time.
+\end{verbatim}
+
+\begin{verbatim}
+for j from 0 to n - 1:
+Executed:  m * n  times (nested inside the i loop).
+Time Complexity: Loop overhead is negligible.
+\end{verbatim}
+
+\begin{verbatim}
+sum = 0
+Executed:  m * n  times
+Time Complexity: O(1) per execution.
+Total Time: O( m * n )
+\end{verbatim}
+
+\begin{verbatim}
+for l from 0 to k - 1:
+Executed:  m * n  times
+Iterations per Execution:  k  times.
+Time Complexity: Loop overhead is negligible
+\end{verbatim}
+
+\begin{verbatim}
+sum = sum + A[i][l] * B[l][j]
+Executed:  m * n * k  times
+Time Complexity per Execution: O(1)
+Total Time: O( m * n * k )
+\end{verbatim}
+
+\begin{verbatim}
+C[i][j] = sum
+Executed:  m * n  times
+Time Complexity per Execution: O(1)
+Total Time: O( m * n )
+\end{verbatim}
+
+\begin{verbatim}
+return C
+Executed: Once.
+Time Complexity: O(1)
+\end{verbatim}
+
+Overall runtime is $O(m\times n \times k)$
+
+\subsection* {Theoretical Runtime for Each Matrix Shape}
+
+Many Rows x Few Columns
+Matrix  A :  m = N ,  k = 4. Matrix  B :  k = 4 , \( n = \dfrac{N}{4} \)
+
+Total Time Complexity:
+\[
+O(m \times n \times k) = O\left( N \times \dfrac{N}{4} \times 4 \right) = O(N^2)
+\]
+
+Square Matrices
+Matrix  A :  m = N ,  k = N. Matrix  B :  k = N ,  n = N 
+
+Total Time Complexity:
+\[
+O(m \times n \times k) = O(N \times N \times N) = O(N^3)
+\]
+
+Few Rows x Many Columns
+Matrix  A : \( m = \dfrac{N}{4} \),  k = N. Matrix  B :  k = N ,  n = 4N 
+Total Time Complexity:
+\[
+O(m \times n \times k) = O\left( \dfrac{N}{4} \times 4N \times N \right) = O(N^3)
+\]
+
+\begin{table}[h!]
+\centering
+\begin{tabular}{|c|c|c|c|}
+\hline
+$N$ & Many Rows x Few Columns (ms) & Square Matrices (ms) & Few Rows x Many Columns (ms) \\
+\hline
+4   & 0.009 & 0.010 & 0.007 \\
+\hline
+8   & 0.008 & 0.039 & 0.031 \\
+\hline
+16  & 0.025 & 0.215 & 0.201 \\
+\hline
+32  & 0.108 & 1.493 & 1.485 \\
+\hline
+64  & 0.314 & 11.147 & 10.583 \\
+\hline
+128 & 1.025 & 67.544 & 61.873 \\
+\hline
+256 & 3.331 & 511.097 & 521.692 \\
+\hline
+512 & 13.584 & 4585.500 & 4909.575 \\
+\hline
+\end{tabular}
+\caption{Measured average runtimes of 5 runs for different matrix sizes and shapes}
+\label{tab:runtime_data}
+\end{table}
+
+Units: Time is measured in milliseconds (ms).
+
+\begin{figure}[h]
+    \centering
+    \includegraphics[width=0.5\textwidth]{HW6/Runtime&N.png}
+    \caption{The plot of the relationship between runtime and the input size N. Here I also take log on both x-axis and y-axis.}
+    \label{fig:my_image}
+\end{figure}
+
+
+\subsection*{Analysis of Results}
+
+\subsubsection*{1. Many Rows x Few Columns (Expected $O(N^2)$)}
+The runtime increases approximately with $N^2$. When $N$ doubles, the runtime nearly quadruples.
+    \begin{itemize}
+        \item $N = 32$ to $N = 64$: Runtime increases from 0.108 ms to 0.314 ms (about 2.9 times).
+        \item $N = 64$ to $N = 128$: Runtime increases from 0.314 ms to 1.025 ms (about 3.26 times).
+        \item $N = 128$ to $N = 256$: Runtime increases from 1.025 ms to 3.331 ms (about 3.25 times).
+    \end{itemize}
+These results suggest quadratic growth, consistent with $O(N^2)$.
+
+
+\subsubsection*{2. Square Matrices (Expected $O(N^3)$)}
+Runtime increases significantly as $N$ increases. When $N$ doubles, runtime approximately multiplies by 8.
+    \begin{itemize}
+        \item $N = 32$ to $N = 64$: Runtime increases from 1.493 ms to 11.147 ms (about 7.47 times).
+        \item $N = 64$ to $N = 128$: Runtime increases from 11.147 ms to 67.544 ms (about 6.06 times).
+        \item $N = 128$ to $N = 256$: Runtime increases from 67.544 ms to 511.097 ms (about 7.57 times).
+        \item $N = 256$ to $N = 512$: Runtime increases from 511.097 ms to 4585.500 ms (about 8.97 times).
+    \end{itemize}
+Results suggest cubic growth, consistent with $O(N^3)$.
+
+\subsubsection*{3. Few Rows x Many Columns (Expected $O(N^3)$)}
+Runtime growth is similar to square matrices. When $N$ doubles, runtime increases by approximately 8 times.
+
+    \begin{itemize}
+        \item $N = 32$ to $N = 64$: Runtime increases from 1.485 ms to 10.583 ms (about 7.12 times).
+        \item $N = 64$ to $N = 128$: Runtime increases from 10.583 ms to 61.873 ms (about 5.85 times).
+        \item $N = 128$ to $N = 256$: Runtime increases from 61.873 ms to 521.692 ms (about 8.43 times).
+        \item $N = 256$ to $N = 512$: Runtime increases from 521.692 ms to 4909.575 ms (about 9.41 times).
+    \end{itemize}
+Results suggest cubic growth, consistent with $O(N^3)$.
+
+
+\subsection*{Comparison of Theory and Practice}
+The potential reasons of divergence between theory and practice:
+    \begin{itemize}
+        \item Python interpreter overhead.
+        \item System load and background processes.
+        \item Memory caching effects.
+        \item Memory access order impacts caching efficiency.
+    \end{itemize}
 
 \vspace{1cm}
+
+\section*{Problem 5}
+Pseudocodes are written in eqsubstr.py files as code comments.
 
 \noindent\textbf{Collaborators: None}
 
