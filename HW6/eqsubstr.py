@@ -92,8 +92,8 @@ def worst(n):
         c = 'b' if c == 'a' else 'a'
     return s
 
-
-if __name__ == "__main__":
+    """
+    if __name__ == "__main__":
     import sys
     sys.setrecursionlimit(10000)
 
@@ -116,6 +116,8 @@ if __name__ == "__main__":
             if elapsed_time_ms > 60000:  # 60 seconds
                 print(f"Stopping at N={N} for {case_name} due to long runtime.")
                 break  # Stop testing larger N for this case
+    """
+
 
 
 Ns = np.array([512, 1024, 2048, 4096, 8192, 16384])
@@ -145,6 +147,10 @@ plt.plot(Ns, theoretical_O_N, '--', color='darkgreen', label='O(N) (Theoretical)
 # For O(N^2)
 theoretical_O_N2 = worst_case_times[0] * (Ns / Ns[0])**2
 plt.plot(Ns, theoretical_O_N2, '--', color='darkred', label='O(N^2) (Theoretical)')
+
+# For O(N^3)
+theoretical_O_N3 = worst_case_times[0] * (Ns / Ns[0])**3
+plt.plot(Ns, theoretical_O_N3, '--', color='darkblue', label='O(N^3) (Theoretical)')
 
 # Set scales to logarithmic for better visualization
 plt.xscale('log', base=2)
