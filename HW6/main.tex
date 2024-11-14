@@ -328,7 +328,217 @@ The potential reasons of divergence between theory and practice:
 \vspace{1cm}
 
 \section*{Problem 5}
-Pseudocodes are written in eqsubstr.py files as code comments.
+
+\begin{verbatim}
+function matching_length_sub_strs(s, c1, c2):
+Initialize c1_ranges as result of find_ranges(c1)
+Initialize c2_ranges as result of find_ranges(c2)
+Initialize result as an empty set
+
+for each length in c1_ranges:
+    if length exists in c2_ranges:
+        c1_starts = c1_ranges[length]
+        c2_starts = c2_ranges[length]
+        for each c1_start in c1_starts:
+            for each c2_start in c2_starts:
+                Add (c1_start, c2_start, length) to result
+
+return result
+
+function find_ranges(char):
+Initialize ranges as an empty dictionary with lists as default values
+Initialize i as 0
+Initialize n as length of s
+while i < n:
+if s[i] == char:
+start = i
+while i < n and s[i] == char:
+Increment i by 1
+length = i - start
+Add start to ranges[length]
+else:
+Increment i by 1
+return ranges
+\end{verbatim}
+
+
+\begin{verbatim}
+function matching_length_sub_strs(s, c1, c2):
+Executed: Once when the function is called.
+Time Complexity: O(1)
+\end{verbatim}
+
+\begin{verbatim}
+Initialize c1_ranges as result of find_ranges(c1)
+Executed: Once (calls find_ranges function).
+Time Complexity: O(n) since find_ranges iterates through string s.
+\end{verbatim}
+
+\begin{verbatim}
+Initialize c2_ranges as result of find_ranges(c2)
+Executed: Once (calls find_ranges function).
+Time Complexity: O(n) since find_ranges iterates through string s.
+\end{verbatim}
+
+\begin{verbatim}
+Initialize result as an empty set
+Executed: Once.
+Time Complexity: O(1)
+\end{verbatim}
+
+\begin{verbatim}
+for each length in c1_ranges:
+Executed: L1 times, where L1 is the unique lengths in c1_ranges.
+Time Complexity: O(L1)
+\end{verbatim}
+
+\begin{verbatim}
+if length exists in c2_ranges:
+Executed: L1 times, checking existence in c2_ranges.
+Time Complexity: O(1) per check
+Total Time: O(L1)
+\end{verbatim}
+
+\begin{verbatim}
+c1_starts = c1_ranges[length]
+Executed: L1 times, assigning list from dictionary.
+Time Complexity: O(1) per assignment
+Total Time: O(L1)
+\end{verbatim}
+
+\begin{verbatim}
+c2_starts = c2_ranges[length]
+Executed: L1 times, assigning list from dictionary.
+Time Complexity: O(1) per assignment
+Total Time: O(L1)
+\end{verbatim}
+
+\begin{verbatim}
+for each c1_start in c1_starts:
+Executed: L1 * N1 times, where N1 is average starts per length in c1_ranges.
+Time Complexity: Loop overhead is negligible; body determines total time.
+\end{verbatim}
+
+\begin{verbatim}
+for each c2_start in c2_starts:
+Executed: L1 * N1 * N2 times, where N2 is average starts per length in c2_ranges.
+Time Complexity: Loop overhead is negligible.
+\end{verbatim}
+
+\begin{verbatim}
+Add (c1_start, c2_start, length) to result
+Executed: L1 * N1 * N2 times, adding to result set.
+Time Complexity per Execution: O(1)
+Total Time: O(L1 * N1 * N2)
+\end{verbatim}
+
+\begin{verbatim}
+return result
+Executed: Once.
+Time Complexity: O(1)
+\end{verbatim}
+
+\begin{verbatim}
+function find_ranges(char):
+Executed: Once per call.
+Time Complexity: O(1)
+\end{verbatim}
+
+\begin{verbatim}
+Initialize ranges as an empty dictionary
+Executed: Once.
+Time Complexity: O(1)
+\end{verbatim}
+
+\begin{verbatim}
+Initialize i as 0
+Executed: Once.
+Time Complexity: O(1)
+\end{verbatim}
+
+\begin{verbatim}
+Initialize n as length of s
+Executed: Once.
+Time Complexity: O(1)
+\end{verbatim}
+
+\begin{verbatim}
+while i < n:
+Executed: n times, iterates through each character in s.
+Time Complexity: O(n)
+\end{verbatim}
+
+\begin{verbatim}
+if s[i] == char:
+Executed: Up to n times, depending on occurrences of char in s.
+Time Complexity: O(1) per check
+Total Time: O(n)
+\end{verbatim}
+
+\begin{verbatim}
+start = i
+Executed: O(1) per match, up to n times.
+Time Complexity: O(n)
+\end{verbatim}
+
+\begin{verbatim}
+while i < n and s[i] == char:
+Executed: Up to n times (increments until char changes).
+Time Complexity: O(n)
+\end{verbatim}
+
+\begin{verbatim}
+Increment i by 1
+Executed: n times across matches.
+Time Complexity: O(n)
+\end{verbatim}
+
+\begin{verbatim}
+length = i - start
+Executed: O(1) per match.
+Time Complexity: O(n)
+\end{verbatim}
+
+\begin{verbatim}
+Add start to ranges[length]
+Executed: O(1) per match, up to n times.
+Time Complexity: O(n)
+\end{verbatim}
+
+\begin{verbatim}
+return ranges
+Executed: Once.
+Time Complexity: O(1)
+\end{verbatim}
+
+The overall runtime of $matching_length_sub_strs$ is $O(n + L_1 \times N_1 \times N_2)$
+
+In the worst case, this is $O(n^3)$.
+
+\begin{table}[h!]
+\centering
+\begin{tabular}{|c|c|c|c|}
+\hline
+$N$ & Best Case Time (ms) & Worst Case Time (ms) & Random Input Time (ms) \\
+\hline
+512   & 0.051    & 7.216      & 2.209     \\
+\hline
+1024  & 0.209    & 34.161     & 14.929    \\
+\hline
+2048  & 0.773    & 143.085    & 57.414    \\
+\hline
+4096  & 3.292    & 757.593    & 244.013   \\
+\hline
+8192  & 17.775   & 4126.838   & 1338.515  \\
+\hline
+16384 & 74.511   & 790339.969 & ---       \\
+\hline
+\end{tabular}
+\caption{Measured average runtimes of 5 runs for different input sizes and cases}
+\label{tab:runtime_data}
+\end{table}
+
+
 
 \noindent\textbf{Collaborators: None}
 
