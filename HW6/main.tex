@@ -512,8 +512,8 @@ Time Complexity: O(1)
 \end{verbatim}
 
 The overall runtime is $O(n + L_1 \times N_1 \times N_2)$
-
-In the worst case, this is $O(n^3)$.
+In the best case, the runtime is $O(N)$
+In the worst case, the runtime is $O(N^3)$.
 
 \begin{table}[h!]
 \centering
@@ -544,6 +544,15 @@ $N$ & Best Case Time (ms) & Worst Case Time (ms) & Random Input Time (ms) \\
   \caption{Runtime vs. Input Size for Different Cases with Theoretical Curves}
   \label{fig:runtime_plot}
 \end{figure}
+
+\subsection*{Comparison of Theory and Practice}
+The potential reasons of divergence between theory and practice:
+    \begin{itemize}
+        \item Python interpreter overhead, has more runtime compared with other compiled languages.
+        \item System load and background processes.
+        \item CPU cache size, memory bandwidth, and processor speed.
+        \item Memory access order impacts caching efficiency.
+    \end{itemize}
 
 
 \noindent\textbf{Collaborators: None}
