@@ -92,6 +92,7 @@ def worst(n):
         c = 'b' if c == 'a' else 'a'
     return s
 
+
 if __name__ == "__main__":
     import sys
     sys.setrecursionlimit(10000)
@@ -117,14 +118,14 @@ if __name__ == "__main__":
                 break  # Stop testing larger N for this case
 
 
-
-Ns = [512, 1024, 2048, 4096, 8192, 16384]
-best_case_times = [0.051, 0.209, 0.773, 3.292, 17.775, 74.511]
-worst_case_times = [7.216, 34.161, 143.085, 757.593, 4126.838, 790339.969]
-random_input_times = [2.209, 14.929, 57.414, 244.013, 1338.515]
+Ns = np.array([512, 1024, 2048, 4096, 8192, 16384])
+best_case_times = np.array([0.051, 0.209, 0.773, 3.292, 17.775, 74.511])
+worst_case_times = np.array([7.216, 34.161, 143.085, 757.593, 4126.838, 790339.969])
+random_input_times = np.array([2.209, 14.929, 57.414, 244.013, 1338.515])
 
 # Adjust Ns and times for Random Input to match in length
 Ns_random = Ns[:-1]  # Exclude the last N since we don't have data for it
+random_input_times = random_input_times
 
 plt.figure(figsize=(10, 6))
 
@@ -137,6 +138,14 @@ plt.plot(Ns, worst_case_times, 'o-', color='red', label='Worst Case')
 # Random Input
 plt.plot(Ns_random, random_input_times, 'o-', color='blue', label='Random Input')
 
+# For O(N)
+theoretical_O_N = best_case_times[0] * (Ns / Ns[0])
+plt.plot(Ns, theoretical_O_N, '--', color='darkgreen', label='O(N) (Theoretical)')
+
+# For O(N^2)
+theoretical_O_N2 = worst_case_times[0] * (Ns / Ns[0])**2
+plt.plot(Ns, theoretical_O_N2, '--', color='darkred', label='O(N^2) (Theoretical)')
+
 # Set scales to logarithmic for better visualization
 plt.xscale('log', base=2)
 plt.yscale('log')
@@ -148,7 +157,5 @@ plt.title('Runtime vs. Input Size for Different Cases')
 
 plt.legend()
 
-plt.grid(True, which="both", ls="--", linewidth=0.5)
-
 plt.show()
-plt.savefig('Q5.png')
+
