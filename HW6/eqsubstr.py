@@ -92,8 +92,8 @@ def worst(n):
         c = 'b' if c == 'a' else 'a'
     return s
 
-    """
-    if __name__ == "__main__":
+
+if __name__ == "__main__":
     import sys
     sys.setrecursionlimit(10000)
 
@@ -116,7 +116,6 @@ def worst(n):
             if elapsed_time_ms > 60000:  # 60 seconds
                 print(f"Stopping at N={N} for {case_name} due to long runtime.")
                 break  # Stop testing larger N for this case
-    """
 
 
 
