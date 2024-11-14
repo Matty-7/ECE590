@@ -106,12 +106,12 @@ theoretical_N3 = times_square[0] * (N / N[0])**3
 
 plt.figure(figsize=(10, 6))
 
-# Plot experimental data
+
 plt.plot(N, times_many_rows, 'o-', label='Many Rows x Few Columns (Experimental)')
 plt.plot(N, times_square, 'o-', label='Square Matrices (Experimental)')
 plt.plot(N, times_few_rows, 'o-', label='Few Rows x Many Columns (Experimental)')
 
-# Plot theoretical curves
+
 plt.plot(N, theoretical_N2, '--', label='O(N^2) (Theoretical)')
 plt.plot(N, theoretical_N3, '--', label='O(N^3) (Theoretical)')
 
