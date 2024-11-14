@@ -274,9 +274,9 @@ $N$ & Many Rows x Few Columns (ms) & Square Matrices (ms) & Few Rows x Many Colu
 
 Units: Time is measured in milliseconds (ms).
 
-\begin{figure}[h]
+\begin{figure}[h!]
     \centering
-    \includegraphics[width=0.5\textwidth]{HW6/Q4.png}
+    \includegraphics[width=0.5\textwidth]{Q4.png}
     \caption{The plot of the relationship between runtime and the input size N. Here I also take log on both x-axis and y-axis.}
     \label{fig:my_image}
 \end{figure}
@@ -511,7 +511,7 @@ Executed: Once.
 Time Complexity: O(1)
 \end{verbatim}
 
-The overall runtime of $matching_length_sub_strs$ is $O(n + L_1 \times N_1 \times N_2)$
+The overall runtime is $O(n + L_1 \times N_1 \times N_2)$
 
 In the worst case, this is $O(n^3)$.
 
@@ -538,6 +538,12 @@ $N$ & Best Case Time (ms) & Worst Case Time (ms) & Random Input Time (ms) \\
 \label{tab:runtime_data}
 \end{table}
 
+\begin{figure}[h!]
+  \centering
+  \includegraphics[width=\textwidth]{Q5.png}
+  \caption{Runtime vs. Input Size for Different Cases with Theoretical Curves}
+  \label{fig:runtime_plot}
+\end{figure}
 
 
 \noindent\textbf{Collaborators: None}
