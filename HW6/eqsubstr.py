@@ -24,24 +24,131 @@
 #  Note that the length 4 range of 'b's does not appear as there are no
 #  Length 4 runs of 'a's.
 
+import random
+import time
+import matplotlib.pyplot as plt
+import numpy as np
+from collections import defaultdict
+
 def matching_length_sub_strs(s, c1, c2):
-    # WRITE ME
-    return set()
+    
+    c1_ranges = defaultdict(list)
+    c2_ranges = defaultdict(list)
 
+    def find_ranges(char):
+        ranges = defaultdict(list)
+        i = 0
+        n = len(s)
+        while i < n:
+            if s[i] == char:
+                start = i
+                while i < n and s[i] == char:
+                    i += 1
+                length = i - start
+                ranges[length].append(start)
+            else:
+                i += 1
+        return ranges
+    
+    c1_ranges = find_ranges(c1)
+    c2_ranges = find_ranges(c2)
 
-# Makes a random string of length n
+    # The set of matching tuples
+    result = set()
+
+    # For each length that exists in both c1 and c2 ranges
+    for length in c1_ranges:
+        if length in c2_ranges:
+            # Create all possible combinations of starting indices
+            c1_starts = c1_ranges[length]
+            c2_starts = c2_ranges[length]
+            # Use list comprehension for faster execution
+            result.update({(c1_start, c2_start, length) for c1_start in c1_starts for c2_start in c2_starts})
+
+    return result
+
 # The string is mostly comprised of 'a' and 'b'
-# So you should use c1='a' and c2='b' when
-# you use this with matching_length_sub_strs
 def rndstr(n):
     def rndchr():
-        x=random.randrange(7)
-        if x==0:
-            return chr(random.randrange(26)+ord('A'))
-        if x<=3:
+        x = random.randrange(7)
+        if x == 0:
+            return chr(random.randrange(26) + ord('A'))
+        if x <= 3:
             return 'a'
         return 'b'
-    ans=[rndchr() for i in range(n)]
+    ans = [rndchr() for _ in range(n)]
     return "".join(ans)
 
-    
+# Best case: string without c1 and c2
+def best(n):
+    return 'x' * n  # 'x' is neither 'a' nor 'b'
+
+# Worst case: alternating c1 and c2
+def worst(n):
+    s = ''
+    c = 'a'  # Assuming c1 = 'a' and c2 = 'b'
+    for _ in range(n):
+        s += c
+        c = 'b' if c == 'a' else 'a'
+    return s
+
+if __name__ == "__main__":
+    import sys
+    sys.setrecursionlimit(10000)
+
+    c1 = 'a'
+    c2 = 'b'
+
+    strgens = [("Best Case", best), ("Worst Case", worst), ("Random Input", rndstr)]
+    Ns = [512 * 2**i for i in range(6)]  # Ns from 512 to 16,384
+
+    print("N,Case,Time_ms")
+    for N in Ns:
+        for case_name, sg in strgens:
+            s = sg(N)
+            start_time = time.perf_counter()
+            result = matching_length_sub_strs(s, c1, c2)
+            end_time = time.perf_counter()
+            elapsed_time_ms = (end_time - start_time) * 1000  # Convert to ms
+            print(f"{N},{case_name},{elapsed_time_ms:.3f}")
+            
+            if elapsed_time_ms > 60000:  # 60 seconds
+                print(f"Stopping at N={N} for {case_name} due to long runtime.")
+                break  # Stop testing larger N for this case
+
+
+
+Ns = [512, 1024, 2048, 4096, 8192, 16384]
+best_case_times = [0.051, 0.209, 0.773, 3.292, 17.775, 74.511]
+worst_case_times = [7.216, 34.161, 143.085, 757.593, 4126.838, 790339.969]
+random_input_times = [2.209, 14.929, 57.414, 244.013, 1338.515]
+
+# Adjust Ns and times for Random Input to match in length
+Ns_random = Ns[:-1]  # Exclude the last N since we don't have data for it
+
+plt.figure(figsize=(10, 6))
+
+# Best Case
+plt.plot(Ns, best_case_times, 'o-', color='green', label='Best Case')
+
+# Worst Case
+plt.plot(Ns, worst_case_times, 'o-', color='red', label='Worst Case')
+
+# Random Input
+plt.plot(Ns_random, random_input_times, 'o-', color='blue', label='Random Input')
+
+# Set scales to logarithmic for better visualization
+plt.xscale('log', base=2)
+plt.yscale('log')
+
+
+plt.xlabel('Input Size N')
+plt.ylabel('Runtime (ms)')
+plt.title('Runtime vs. Input Size for Different Cases')
+
+plt.legend()
+
+plt.grid(True, which="both", ls="--", linewidth=0.5)
+
+plt.show()
+plt.savefig('Q5.png')

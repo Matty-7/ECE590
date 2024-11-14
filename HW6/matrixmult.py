@@ -20,6 +20,8 @@
 
 import time
 import random
+import matplotlib.pyplot as plt
+import numpy as np
 
 def matrix_mul(a,b):
     # Write me
@@ -88,3 +90,37 @@ if __name__ == "__main__":
         time_few_rows = (end_time - start_time) * 1000  # Convert to ms
 
         print(f"{N},{time_many_rows:.3f},{time_square:.3f},{time_few_rows:.3f}")
+
+# Experimental data that I got from running the program
+N_values = [4, 8, 16, 32, 64, 128, 256, 512]
+times_many_rows = [0.009, 0.008, 0.025, 0.108, 0.314, 1.025, 3.331, 13.584]
+times_square = [0.010, 0.039, 0.215, 1.493, 11.147, 67.544, 511.097, 4585.500]
+times_few_rows = [0.007, 0.031, 0.201, 1.485, 10.583, 61.873, 521.692, 4909.575]
+
+N = np.array(N_values)
+
+# For O(N^2)
+theoretical_N2 = times_many_rows[0] * (N / N[0])**2
+# For O(N^3)
+theoretical_N3 = times_square[0] * (N / N[0])**3
+
+plt.figure(figsize=(10, 6))
+
+# Plot experimental data
+plt.plot(N, times_many_rows, 'o-', label='Many Rows x Few Columns (Experimental)')
+plt.plot(N, times_square, 'o-', label='Square Matrices (Experimental)')
+plt.plot(N, times_few_rows, 'o-', label='Few Rows x Many Columns (Experimental)')
+
+# Plot theoretical curves
+plt.plot(N, theoretical_N2, '--', label='O(N^2) (Theoretical)')
+plt.plot(N, theoretical_N3, '--', label='O(N^3) (Theoretical)')
+
+plt.xscale('log', base=2)
+plt.yscale('log')
+
+plt.xlabel('Input Size N')
+plt.ylabel('Runtime (ms)')
+plt.title('Runtime vs. Input Size for Matrix Multiplication')
+plt.legend()
+plt.grid(True)
+plt.show()
