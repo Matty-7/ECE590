@@ -1,0 +1,57 @@
+\documentclass[12 pt]{article}
+\usepackage{algorithm}
+\usepackage{algpseudocode}
+\usepackage{amsmath}
+\usepackage{amsfonts, amssymb}
+\usepackage{fancyhdr}
+
+\oddsidemargin=-0.5cm                  
+\setlength{\textwidth}{6.5in}          
+\addtolength{\voffset}{-20pt}        		
+\addtolength{\headsep}{25pt}
+
+\setlength{\headheight}{27.2pt}
+\addtolength{\topmargin}{-12.7pt}
+
+\pagestyle{fancy}
+\fancyhf{}
+\fancyhead[L]{Theory and Practice of Algorithms \\ Homework 6}
+\fancyhead[R]{Jingheng Huan \\ \today}
+\fancyfoot[C]{\thepage}
+
+\begin{document}
+
+\section*{Problem 1}
+\begin{algorithm}
+\caption{FindIndex(A, n)}
+\begin{algorithmic}[1]
+\Function{FindIndex}{$A, n$}
+    \State $low \gets 1$
+    \State $high \gets n$
+    \While{$low \leq high$}
+        \State $mid \gets \left\lfloor \dfrac{low + high}{2} \right\rfloor$
+        \If{$A[mid] = mid$}
+            \State \Return $mid$
+        \ElsIf{$A[mid] < mid$}
+            \State $low \gets mid + 1$
+        \Else
+            \State $high \gets mid - 1$
+        \EndIf
+    \EndWhile
+    \State \Return \texttt{No such index exists}
+\EndFunction
+\end{algorithmic}
+\end{algorithm}
+
+\paragraph{Explanation of Running Time}
+
+This algorithm achieves a worst-case running time of \( O(\log n) \) by employing a binary search approach that consistently halves the search interval with each iteration. In the worst case, the desired index \( i \) (where \( A[i] = i \)) does not exist or is located at one end of the array, making this algorithm to explore all possible sub-arrays by repeatedly dividing the search space. At every step, it compares the middle element \( A[\text{mid}] \) with its index \( \text{mid} \) to determine which half of the array may contain the desired index. This systematic reduction of the search space by half in each step ensures that the number of necessary operations grows logarithmically relative to the size of the input array, thereby maintaining an \( O(\log n) \) running time in the worst-case scenario.
+
+
+
+\vspace{1cm}
+
+\noindent\textbf{Collaborators: None}
+
+
+\end{document}
