@@ -22,7 +22,7 @@ def initialize_graph():
         Airport("MSP", "Minneapolis and Saint Paul", "MN", 93.2650, 44.9778),
         Airport("PDX", "Portland", "OR", 122.6762, 45.5051),
         Airport("PHL", "Philadelphia", "PA", 75.1652, 39.9526),
-        Airport("PHX", "Phoenix", "AZ", 112.008629, 33.437309),
+        Airport("PHX", "Phoenix", "AZ", 112.0086, 33.4373),
         Airport("RDU", "Raleigh and Durham", "NC", 78.7870, 35.7796),
         Airport("SAN", "San Diego", "CA", 117.1611, 32.7157),
         Airport("SEA", "Seattle", "WA", 122.3321, 47.6062),
@@ -59,11 +59,16 @@ def initialize_graph():
     ]
 
     graph = Graph()
+    valid_codes = {airport.code for airport in airports}
+
     for airport in airports:
         graph.add_airport(airport)
 
     for i, airport in enumerate(airports):
         for neighbour in neighbours[i]:
-            graph.add_connection(airport.code, neighbour)
+            if neighbour in valid_codes:
+                graph.add_connection(airport.code, neighbour)
+            else:
+                print(f"Warning: {neighbour} is not a valid airport code.")
 
     return graph 
