@@ -1,9 +1,8 @@
-\documentclass[12 pt]{article}
-\usepackage{algorithm}
+\documentclass[12pt]{article}
 \usepackage{algpseudocode}
-\usepackage{amsmath}
-\usepackage{amsfonts, amssymb}
 \usepackage{fancyhdr}
+\usepackage{amsmath, amssymb, amsfonts, amsthm, algorithm, tikz}
+\usepackage{fullpage}
 
 \oddsidemargin=-0.5cm                  
 \setlength{\textwidth}{6.5in}          
@@ -45,13 +44,70 @@
 
 \paragraph{Explanation of Running Time}
 
-This algorithm achieves a worst-case running time of \( O(\log n) \) by employing a binary search approach that consistently halves the search interval with each iteration. In the worst case, the desired index \( i \) (where \( A[i] = i \)) does not exist or is located at one end of the array, making this algorithm to explore all possible sub-arrays by repeatedly dividing the search space. At every step, it compares the middle element \( A[\text{mid}] \) with its index \( \text{mid} \) to determine which half of the array may contain the desired index. This systematic reduction of the search space by half in each step ensures that the number of necessary operations grows logarithmically relative to the size of the input array, thereby maintaining an \( O(\log n) \) running time in the worst-case scenario.
+This algorithm achieves a worst-case running time of \( O(\log n) \) by employing a binary search approach that consistently halves the search interval with each iteration. In the worst case, the desired index \( i \) (where \( A[i] = i \)) does not exist or is located at one end of the array, making this algorithm explore all possible sub-arrays by repeatedly dividing the search space. At every step, it compares the middle element \( A[\text{mid}] \) with its index \( \text{mid} \) to determine which half of the array may contain the desired index. This systematic reduction of the search space by half in each step ensures that the number of necessary operations grows logarithmically relative to the size of the input array, thereby maintaining an \( O(\log n) \) running time in the worst-case scenario.
+
+\newpage
+
+\section*{Problem 2}
+
+\section*{(a) Greedy Algorithm}
 
 
+\begin{algorithm}
+\caption{MaxParty}
+\begin{algorithmic}[1]
+\Require Tree $T$ with root node $r$
+\Ensure Maximum number of employees invited without inviting any two adjacent ones
+
+\Function{MaxParty}{$node$}
+    \If{$node$ is \textbf{null}}
+        \State \Return $(0, \text{false})$
+    \EndIf
+    \State $total \gets 0$
+    \State $childrenSelected \gets$ $[$ $]$
+    \For{each $child$ in $node.\text{children}$}
+        \State $(childTotal, childSelected) \gets \Call{MaxParty}{child}$
+        \State $total \gets total + childTotal$
+        \State \text{append} $childSelected$ to $childrenSelected$
+    \EndFor
+    \If{none of $childrenSelected$ are \textbf{true}}
+        \State $total \gets total + 1$
+        \State \Return $(total, \text{true})$
+    \Else
+        \State \Return $(total, \text{false})$
+    \EndIf
+\EndFunction
+\end{algorithmic}
+\end{algorithm}
+
+Perform a \textbf{post-order traversal} of the tree, processing all children of a node before the node itself. For each node during traversal: \textbf{Include} the node in the party if none of its immediate children are included. \textbf{Exclude} the node if at least one of its immediate children is included. Maintain a set $Selected$ to keep track of invited employees. The function \texttt{MaxParty} returns a tuple containing the total number of selected employees and a boolean indicating whether the current node is selected.
+
+
+\section*{(b) Worst-Case Asymptotic Runtime}
+
+The algorithm performs a single post-order traversal of the tree, visiting each node exactly once and performing a constant amount of work at each node. Time Complexity is O(n), where \( n \) is the number of nodes (employees) in the tree.
+
+\section*{(c) Proof of Correctness Using Induction}
+
+\subsection*{Base Case}
+
+Consider a tree with a single node (the root). The algorithm will include this node in $Selected$, which is the correct maximum independent set since there are no other nodes to consider.
+
+\subsection*{Inductive Step}
+Assume that for all trees with fewer than \( n \) nodes, the algorithm correctly finds the maximum independent set. Consider a tree \( T \) with \( n \) nodes. During the post-order traversal, for each node \( v \), the algorithm makes a decision based on whether any of its immediate children are included in the $Selected$ set.
+
+\begin{enumerate}
+    \item \textbf{If \( v \) is included in the $Selected$ set:}
+    None of its immediate children are included, ensuring no two adjacent nodes are selected. By the inductive hypothesis, the subtrees rooted at each child are optimally solved. Therefore, the inclusion of \( v \) contributes exactly one to the total, and the rest of the subtree contributes optimally.
+    
+    \item \textbf{If \( v \) is excluded from the $Selected$ set:} At least one of its immediate children is included. By the inductive hypothesis, the subtrees rooted at each child are optimally solved, allowing for the maximum number of selected nodes without violating the adjacency constraint.
+    
+\end{enumerate}
+
+In both scenarios, the algorithm makes a choice that maximizes the number of selected nodes without violating the adjacency constraint. Thus, by induction, the algorithm correctly computes the maximum independent set for any tree.
 
 \vspace{1cm}
 
 \noindent\textbf{Collaborators: None}
-
 
 \end{document}
