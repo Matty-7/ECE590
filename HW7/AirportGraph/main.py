@@ -69,13 +69,13 @@ class AirportGraphAlgoMenu(tk.Frame):
 
         if algorithm == "BFS":
             path, distance = self.graph_algorithms.bfs(from_airport, to_airport)
-            print(f"BFS selected: from {from_airport} to {to_airport}")
+            print(f"BFS selected: from {from_airport} to {to_airport}, Path: {path}, Total Cost: {distance}")
         elif algorithm == "DFS":
             path, distance = self.graph_algorithms.dfs(from_airport, to_airport)
-            print(f"DFS selected: from {from_airport} to {to_airport}")
+            print(f"DFS selected: from {from_airport} to {to_airport}, Path: {path}, Total Cost: {distance}")
         elif algorithm == "Dijkstra":
             path, distance = self.graph_algorithms.dijkstra(from_airport, to_airport)
-            print(f"Dijkstra SP selected: from {from_airport} to {to_airport}")
+            print(f"Dijkstra SP selected: from {from_airport} to {to_airport}, Path: {path}, Total Cost: {distance}")
 
         if not path:
             messagebox.showinfo("Result", "No path found between the selected airports")
