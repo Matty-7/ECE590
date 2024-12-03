@@ -3,6 +3,7 @@ from tkinter import ttk, messagebox
 from graph import Graph
 from airport import Airport
 from graph_algorithms import GraphAlgorithms
+from initialize_graph import initialize_graph
 
 #
 # GUI for selecting the start and end point for graph traversal algorithm
@@ -24,7 +25,7 @@ class AirportGraphAlgoMenu(tk.Frame):
         self.states = ["ATL", "AUS", "BOS", "BWI", "DCA", "DEN",
                        "DFW", "DTW", "EWR", "IAD", "IAH", "JFK",
                        "LAS", "LAX", "MDW", "MIA", "MSP", "PDX",
-                       "PHL", "RDU", "SAN", "SEA", "SFO", "SLC"]
+                       "PHL", "PHX", "RDU", "SAN", "SEA", "SFO", "SLC"]
 
         # a list of 3 algorithms for user to select
         self.algo_choices = ["BFS", "DFS", "Dijkstra"]
@@ -51,15 +52,20 @@ class AirportGraphAlgoMenu(tk.Frame):
         self.run_button.grid(row=3, column=0, columnspan=2, padx=5, pady=5)
 
     def initialize_graph(self):
-        # Initialize airports and their connections
-        graph = Graph()
-        # Add airports and connections here
-        return graph
+        return initialize_graph()
 
     def run_algorithm(self):
         from_airport = self.from_view.get()
         to_airport = self.to_view.get()
         algorithm = self.algo_choice_view.get()
+
+        if not from_airport or not to_airport or not algorithm:
+            messagebox.showerror("Error", "Please select both airports and an algorithm")
+            return
+
+        if from_airport == to_airport:
+            messagebox.showerror("Error", "Please select different airports")
+            return
 
         if algorithm == "BFS":
             path, distance = self.graph_algorithms.bfs(from_airport, to_airport)
@@ -70,6 +76,9 @@ class AirportGraphAlgoMenu(tk.Frame):
         elif algorithm == "Dijkstra":
             path, distance = self.graph_algorithms.dijkstra(from_airport, to_airport)
             print(f"Dijkstra SP selected: from {from_airport} to {to_airport}")
+
+        if not path:
+            messagebox.showinfo("Result", "No path found between the selected airports")
 
     def bfs(self, from_airport, to_airport):
         path, distance = self.graph_algorithms.bfs(from_airport, to_airport)
