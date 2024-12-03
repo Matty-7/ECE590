@@ -1,18 +1,14 @@
 from collections import deque
 import heapq
-from typing import Dict, List, Set, Tuple
+from typing import List, Set, Tuple
 from graph import Graph
-from airport import Airport
 
 class GraphAlgorithms:
     def __init__(self, graph: Graph):
         self.graph = graph
 
     def bfs(self, start: str, end: str) -> Tuple[List[str], float]:
-        """
-        Implements Breadth First Search
-        Returns: (path, total_distance)
-        """
+
         if start not in self.graph.nodes or end not in self.graph.nodes:
             return [], 0
 
@@ -34,10 +30,7 @@ class GraphAlgorithms:
         return [], 0
 
     def dfs(self, start: str, end: str) -> Tuple[List[str], float]:
-        """
-        Implements Depth First Search
-        Returns: (path, total_distance)
-        """
+        
         def dfs_recursive(current: str, visited: Set[str], path: List[str], distance: float) -> Tuple[List[str], float]:
             if current == end:
                 return path, distance
@@ -57,10 +50,7 @@ class GraphAlgorithms:
         return dfs_recursive(start, set(), [start], 0)
 
     def dijkstra(self, start: str, end: str) -> Tuple[List[str], float]:
-        """
-        Implements Dijkstra's Shortest Path algorithm
-        Returns: (path, total_distance)
-        """
+        
         if start not in self.graph.nodes or end not in self.graph.nodes:
             return [], 0
 

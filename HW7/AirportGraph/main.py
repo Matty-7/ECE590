@@ -1,7 +1,5 @@
 import tkinter as tk
 from tkinter import ttk, messagebox
-from graph import Graph
-from airport import Airport
 from graph_algorithms import GraphAlgorithms
 from initialize_graph import initialize_graph
 
@@ -13,15 +11,14 @@ from initialize_graph import initialize_graph
 class AirportGraphAlgoMenu(tk.Frame):
     def __init__(self, master=None):
         super().__init__(master)
-        self.to_label = None
         self.master = master
         self.pack()
 
         # Initialize the graph and algorithms
-        self.graph = self.initialize_graph()
+        self.graph = initialize_graph()
         self.graph_algorithms = GraphAlgorithms(self.graph)
 
-        # a list of all 20 airports
+        # a list of all 25 airports
         self.states = ["ATL", "AUS", "BOS", "BWI", "DCA", "DEN",
                        "DFW", "DTW", "EWR", "IAD", "IAH", "JFK",
                        "LAS", "LAX", "MDW", "MIA", "MSP", "PDX",
@@ -51,9 +48,6 @@ class AirportGraphAlgoMenu(tk.Frame):
         self.run_button = tk.Button(self, text="Run", command=self.run_algorithm)
         self.run_button.grid(row=3, column=0, columnspan=2, padx=5, pady=5)
 
-    def initialize_graph(self):
-        return initialize_graph()
-
     def run_algorithm(self):
         from_airport = self.from_view.get()
         to_airport = self.to_view.get()
@@ -75,22 +69,10 @@ class AirportGraphAlgoMenu(tk.Frame):
             print(f"DFS selected: from {from_airport} to {to_airport}, Path: {path}, Total Cost: {distance}")
         elif algorithm == "Dijkstra":
             path, distance = self.graph_algorithms.dijkstra(from_airport, to_airport)
-            print(f"Dijkstra SP selected: from {from_airport} to {to_airport}, Path: {path}, Total Cost: {distance}")
+            print(f"Dijkstra Shortest Path selected: from {from_airport} to {to_airport}, Path: {path}, Total Cost: {distance}")
 
         if not path:
             messagebox.showinfo("Result", "No path found between the selected airports")
-
-    def bfs(self, from_airport, to_airport):
-        path, distance = self.graph_algorithms.bfs(from_airport, to_airport)
-        print(f"BFS selected: from {from_airport} to {to_airport}")
-
-    def dfs(self, from_airport, to_airport):
-        path, distance = self.graph_algorithms.dfs(from_airport, to_airport)
-        print(f"DFS selected: from {from_airport} to {to_airport}")
-
-    def sp(self, from_airport, to_airport):
-        path, distance = self.graph_algorithms.dijkstra(from_airport, to_airport)
-        print(f"Dijkstra SP selected: from {from_airport} to {to_airport}")
 
 if __name__ == "__main__":
     root = tk.Tk()
